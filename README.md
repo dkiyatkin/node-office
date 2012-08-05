@@ -3,11 +3,11 @@ node-office
 
 Parse office documents (odt, doc, docx, ods, xls, etc..)
 
-## Requirements:
+## Requirements
 
 xlhtml, unoconv
 
-## Examples:
+## Examples
 
 ```javascript
 var office = require('office');
