@@ -1,0 +1,23 @@
+{
+	"name": "node-office",
+	"description": "Parse office documents (doc, docx, xls, etc..)",
+	"version": "0.0.1",
+	"author": "Dmitriy Kiyatkin <d.kiyatkin@itlf.ru>",
+	"keywords": [
+		"doc", "xls", "docx", "xlsx", "odt"
+	],
+	"repository": "git://github.com/dkiyatkin/node-office.git",
+	"bugs": {
+		"url" : "http://github.com/dkiyatkin/node-office/issues"
+	},
+	"licenses" : [
+		{
+			"type": "MIT",
+			"url" : "http://github.com/dkiyatkin/node-office/raw/master/LICENSE"
+		}
+	],
+	"main": "index",
+	"engines": {
+		"node": ">=0.6.0"
+	}
+}
