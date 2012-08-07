@@ -1,17 +1,18 @@
 {
 	"name": "node-office",
 	"description": "Parse office documents (doc, docx, xls, etc..)",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"author": "Dmitriy Kiyatkin <d.kiyatkin@itlf.ru>",
 	"dependencies": {
 		"xml2json": ">=0.2.4",
 		"temp": ">=0.4.0"
 	},
 	"devDependencies": {
-		"nodeunit": ">=0.7.4"
+		"nodeunit": ">=0.7.4",
+		"htmlparser": ">=1.7.6"
 	},
 	"keywords": [
-		"doc", "xls", "docx", "xlsx", "odt"
+		"doc", "xls", "docx", "xlsx", "odt", "ods"
 	],
 	"repository": "git://github.com/dkiyatkin/node-office.git",
 	"bugs": {

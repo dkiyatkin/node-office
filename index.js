@@ -9,7 +9,7 @@ var office = {
 	documents: ['doc', 'docx', 'odt'],
 	xlsParse: function(file, callback) {
 		exec('xlhtml -xml ' + file, function(error, stdout, stderr) {
-			if(stderr) { console.error(stderr) };
+			if (stderr) { console.error(stderr); }
 			if (!error) {
 				callback(null, xmlParser.toJson(stdout, {object: true}).excel_workbook);
 			} else { callback(error); }
@@ -20,7 +20,7 @@ var office = {
 		if (options.ext != 'xls') {
 			var tempname = temp.path({suffix: '.xls'});
 			exec('unoconv --stdout --format=xls ' + filename + ' > ' + tempname, function(error, stdout, stderr) {
-				if(stderr) { console.error(stderr) };
+				if (stderr) { console.error(stderr); }
 				if (!error) {
 					self.xlsParse(tempname, function(err, data) {
 						fs.unlink(tempname, function(e) {
@@ -31,6 +31,29 @@ var office = {
 				} else { cb(error); }
 			});
 		} else { self.xlsParse(filename, cb); }
+	},
+	documentParse: function(filename, options, cb) {
+		var self = this;
+		if (options.img) {
+			if (!options.path) {
+				options.path = temp.path({prefix: 'node-office-'});
+			}
+		}
+		if (options.path) {
+			exec('unoconv --outputpath='+ options.path +' --format=html ' + filename, function(error, stdout, stderr) {
+				if (stderr) { console.error(stderr); }
+				if (!error) {
+					cb(null, path.join(options.path, path.basename(filename, path.extname(filename))+'.html'));
+				} else { cb(error); }
+			});
+		} else {
+			exec('unoconv --stdout --format=html ' + filename, function(error, stdout, stderr) {
+				if (stderr) { console.error(stderr); }
+				if (!error) {
+					cb(null, stdout);
+				} else { cb(error); }
+			});
+		}
 	},
 	getType: function(filename, cb) {
 		// проверка по расширению
@@ -53,7 +76,7 @@ var office = {
 	},
 	parse: function(filename, options, cb) {
 		var self = this;
-		if (!cb && typeof(options) == 'function') { cb = options; options = { } }
+		if (!cb && typeof(options) == 'function') { cb = options; options = { }; }
 		self.getType(filename, function(err, type, ext) {
 			options.ext = ext;
 			if (!err) {
