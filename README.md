@@ -15,3 +15,4 @@ office.parse('spreadsheet.ods', function(err, data) {
 	console.log(data.sheets);
 });
 ```
+See test dir for more examples.
