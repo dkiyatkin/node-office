@@ -7,6 +7,12 @@ Parse office documents (odt, doc, docx, ods, xls, etc..)
 
 xlhtml, unoconv
 
+## Installation
+
+``` bash
+$ npm install office
+```
+
 ## Examples
 
 ```javascript

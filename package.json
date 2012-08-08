@@ -1,5 +1,5 @@
 {
-	"name": "node-office",
+	"name": "office",
 	"description": "Parse office documents (doc, docx, xls, etc..)",
 	"version": "0.0.2",
 	"author": "Dmitriy Kiyatkin <d.kiyatkin@itlf.ru>",
