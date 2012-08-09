@@ -1,7 +1,7 @@
 {
 	"name": "office",
 	"description": "Parse office documents (doc, docx, xls, etc..)",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"author": "Dmitriy Kiyatkin <d.kiyatkin@itlf.ru>",
 	"dependencies": {
 		"xml2json": ">=0.2.4",
