@@ -14,7 +14,7 @@ var exec = function(cmd, args, cb) {
 	cmd.stderr.on('data', function (data) {
 		stderr = stderr + data;
 	});
-	cmd.on('exit', function (code) {
+	cmd.on('close', function (code) {
 		cb(code, stdout, stderr);
 	});
 };
