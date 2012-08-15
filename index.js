@@ -1,31 +1,52 @@
 var fs = require('fs');
 var path = require('path');
-var exec = require('child_process').exec;
 var xmlParser = require('xml2json');
 var temp = require('temp');
+var spawn = require('child_process').spawn;
+
+var exec = function(cmd, args, cb) {
+	var stdout = '';
+	var stderr = '';
+	cmd = spawn(cmd, args);
+	cmd.stdout.on('data', function (data) {
+		stdout = stdout + data;
+	});
+	cmd.stderr.on('data', function (data) {
+		stderr = stderr + data;
+	});
+	cmd.on('exit', function (code) {
+		cb(code, stdout, stderr);
+	});
+};
 
 var office = {
 	spreadsheets: ['xls', 'xlsx', 'ods'],
 	documents: ['doc', 'docx', 'odt'],
 	xlsParse: function(file, callback) {
-		exec('xlhtml -xml \'' + file + '\'', function(error, stdout, stderr) {
+		exec('xlhtml', ['-xml', file], function(code, stdout, stderr) {
 			if (stderr) { console.error(stderr); }
-			if (!error) {
+			if (code) {
+				callback(code)
+			} else {
 				callback(null, xmlParser.toJson(stdout, {object: true}).excel_workbook);
-			} else { callback(error); }
+			}
 		});
 	},
 	spreadsheetParse: function(filename, options, cb) {
 		var self = this;
 		if (options.ext != 'xls') {
-			var tempname = temp.path({suffix: '.xls'});
-			exec('unoconv --stdout --format=xls \'' + filename + '\' > \'' + tempname +'\'', function(error, stdout, stderr) {
+			var tempname = temp.path({prefix: 'node-office-'});
+			exec('unoconv', ['--outputpath='+tempname, '--format=xls', filename], function(error, stdout, stderr) {
 				if (stderr) { console.error(stderr); }
 				if (!error) {
-					self.xlsParse(tempname, function(err, data) {
-						fs.unlink(tempname, function(e) {
+					tempfile = path.join(tempname, path.basename(filename, path.extname(filename))+'.xls');
+					self.xlsParse(tempfile, function(err, data) {
+						fs.unlink(tempfile, function(e) {
 							if (e) { console.error(e); }
-							cb(err, data);
+							fs.rmdir(tempname, function(e) {
+								if (e) { console.error(e); }
+								cb(err, data);
+							});
 						});
 					});
 				} else { cb(error); }
@@ -40,14 +61,14 @@ var office = {
 			}
 		}
 		if (options.path) {
-			exec('unoconv --outputpath=\''+ options.path +'\' --format=html \'' + filename +'\'', function(error, stdout, stderr) {
+			exec('unoconv', ['--outputpath='+options.path, '--format=html', filename], function(error, stdout, stderr) {
 				if (stderr) { console.error(stderr); }
 				if (!error) {
 					cb(null, path.join(options.path, path.basename(filename, path.extname(filename))+'.html'));
 				} else { cb(error); }
 			});
 		} else {
-			exec('unoconv --stdout --format=html \'' + filename + '\'', function(error, stdout, stderr) {
+			exec('unoconv', ['--stdout', '--format=html', filename], function(error, stdout, stderr) {
 				if (stderr) { console.error(stderr); }
 				if (!error) {
 					cb(null, stdout);
