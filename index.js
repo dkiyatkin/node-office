@@ -8,7 +8,7 @@ var office = {
 	spreadsheets: ['xls', 'xlsx', 'ods'],
 	documents: ['doc', 'docx', 'odt'],
 	xlsParse: function(file, callback) {
-		exec('xlhtml -xml ' + file, function(error, stdout, stderr) {
+		exec('xlhtml -xml \'' + file + '\'', function(error, stdout, stderr) {
 			if (stderr) { console.error(stderr); }
 			if (!error) {
 				callback(null, xmlParser.toJson(stdout, {object: true}).excel_workbook);
