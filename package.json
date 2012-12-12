@@ -1,14 +1,14 @@
 {
 	"name": "office",
 	"description": "Parse office documents (doc, docx, xls, etc..)",
-	"version": "0.0.5",
-	"author": "Dmitriy Kiyatkin <d.kiyatkin@itlf.ru>",
+	"version": "0.0.6",
+	"author": "Dmitriy Kiyatkin <info@dkiyatkin.com>",
 	"dependencies": {
 		"xml2json": ">=0.2.4",
 		"temp": ">=0.4.0"
 	},
 	"devDependencies": {
-		"nodeunit": ">=0.7.4",
+		"grunt": "~0.3.17",
 		"htmlparser": ">=1.7.6"
 	},
 	"keywords": [

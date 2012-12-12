@@ -26,7 +26,7 @@ var office = {
 		exec('xlhtml', ['-xml', file], function(code, stdout, stderr) {
 			if (stderr) { console.error(stderr); }
 			if (code) {
-				callback(code)
+				callback(code);
 			} else {
 				callback(null, xmlParser.toJson(stdout, {object: true}).excel_workbook);
 			}
@@ -34,12 +34,12 @@ var office = {
 	},
 	spreadsheetParse: function(filename, options, cb) {
 		var self = this;
-		if (options.ext != 'xls') {
+		if (options.ext !== 'xls') {
 			var tempname = temp.path({prefix: 'node-office-'});
 			exec('unoconv', ['--outputpath='+tempname, '--format=xls', filename], function(error, stdout, stderr) {
 				if (stderr) { console.error(stderr); }
 				if (!error) {
-					tempfile = path.join(tempname, path.basename(filename, path.extname(filename))+'.xls');
+					var tempfile = path.join(tempname, path.basename(filename, path.extname(filename))+'.xls');
 					self.xlsParse(tempfile, function(err, data) {
 						fs.unlink(tempfile, function(e) {
 							if (e) { console.error(e); }
@@ -84,9 +84,9 @@ var office = {
 				cb(new Error('file does not exist'));
 			} else {
 				var ext = path.extname(filename).toLowerCase().slice(1);
-				if (self.spreadsheets.indexOf(ext) != -1) {
+				if (self.spreadsheets.indexOf(ext) !== -1) {
 					cb(null, 'spreadsheet', ext);
-				} else if (self.documents.indexOf(ext) != -1) {
+				} else if (self.documents.indexOf(ext) !== -1) {
 					cb(null, 'document');
 				} else {
 					// TODO проверка по mime-type
@@ -97,15 +97,15 @@ var office = {
 	},
 	parse: function(filename, options, cb) {
 		var self = this;
-		if (!cb && typeof(options) == 'function') { cb = options; options = { }; }
+		if (!cb && typeof(options) === 'function') { cb = options; options = { }; }
 		self.getType(filename, function(err, type, ext) {
 			options.ext = ext;
 			if (!err) {
-				if (type == 'spreadsheet') {
+				if (type === 'spreadsheet') {
 					self.spreadsheetParse(filename, options, function(err, data) {
 						cb(err, data);
 					});
-				} else if (type == 'document') {
+				} else if (type === 'document') {
 					self.documentParse(filename, options, function(err, data) {
 						cb(err, data);
 					});
