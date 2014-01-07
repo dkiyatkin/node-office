@@ -54,21 +54,22 @@ var office = {
 		} else { self.xlsParse(filename, cb); }
 	},
 	documentParse: function(filename, options, cb) {
-		var self = this;
+		var self = this,
+        options.format = options.format || 'html';
 		if (options.img) {
 			if (!options.path) {
 				options.path = temp.path({prefix: 'node-office-'});
 			}
-		}
+    }
 		if (options.path) {
-			exec('unoconv', ['--outputpath='+options.path, '--format=html', filename], function(error, stdout, stderr) {
+			exec('unoconv', ['--outputpath='+options.path, '--format='+options.format, filename], function(error, stdout, stderr) {
 				if (stderr) { console.error(stderr); }
 				if (!error) {
 					cb(null, path.join(options.path, path.basename(filename, path.extname(filename))+'.html'));
 				} else { cb(error); }
 			});
 		} else {
-			exec('unoconv', ['--stdout', '--format=html', filename], function(error, stdout, stderr) {
+			exec('unoconv', ['--stdout', '--format='+options.format, filename], function(error, stdout, stderr) {
 				if (stderr) { console.error(stderr); }
 				if (!error) {
 					cb(null, stdout);
