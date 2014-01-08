@@ -1,31 +1,40 @@
 {
-	"name": "office",
-	"description": "Parse office documents (doc, docx, xls, etc..)",
-	"version": "0.0.6",
-	"author": "Dmitriy Kiyatkin <info@dkiyatkin.com>",
-	"dependencies": {
-		"xml2json": ">=0.2.4",
-		"temp": ">=0.4.0"
-	},
-	"devDependencies": {
-		"grunt": "~0.3.17",
-		"htmlparser": ">=1.7.6"
-	},
-	"keywords": [
-		"doc", "xls", "docx", "xlsx", "odt", "ods"
-	],
-	"repository": "git://github.com/dkiyatkin/node-office.git",
-	"bugs": {
-		"url" : "http://github.com/dkiyatkin/node-office/issues"
-	},
-	"licenses" : [
-		{
-			"type": "MIT",
-			"url" : "http://github.com/dkiyatkin/node-office/raw/master/LICENSE"
-		}
-	],
-	"main": "index",
-	"engines": {
-		"node": ">=0.6.0"
-	}
+  "name": "office",
+  "version": "0.0.7",
+  "description": "Parse office documents (doc, docx, xls, etc..)",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "grunt nodeunit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/dkiyatkin/node-office.git"
+  },
+  "keywords": [
+    "doc",
+    "xls",
+    "docx",
+    "xlsx",
+    "odt",
+    "ods"
+  ],
+  "author": "Dmitriy Kiyatkin <info@dkiyatkin.com> (http://dkiyatkin.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dkiyatkin/node-office/issues"
+  },
+  "homepage": "https://github.com/dkiyatkin/node-office",
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-jshint": "~0.8.0",
+    "grunt-contrib-nodeunit": "~0.2.2",
+    "htmlparser": "~1.7.7"
+  },
+  "dependencies": {
+    "xml2json": "~0.3.2",
+    "temp": "~0.6.0"
+  }
 }

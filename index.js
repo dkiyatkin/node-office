@@ -8,13 +8,13 @@ var exec = function(cmd, args, cb) {
 	var stdout = '';
 	var stderr = '';
 	cmd = spawn(cmd, args);
-	cmd.stdout.on('data', function (data) {
+	cmd.stdout.on('data', function(data) {
 		stdout = stdout + data;
 	});
-	cmd.stderr.on('data', function (data) {
+	cmd.stderr.on('data', function(data) {
 		stderr = stderr + data;
 	});
-	cmd.on('close', function (code) {
+	cmd.on('close', function(code) {
 		cb(code, stdout, stderr);
 	});
 };
@@ -54,13 +54,13 @@ var office = {
 		} else { self.xlsParse(filename, cb); }
 	},
 	documentParse: function(filename, options, cb) {
-		var self = this,
-        options.format = options.format || 'html';
+		var self = this;
+		options.format = options.format || 'html';
 		if (options.img) {
 			if (!options.path) {
 				options.path = temp.path({prefix: 'node-office-'});
 			}
-    }
+		}
 		if (options.path) {
 			exec('unoconv', ['--outputpath='+options.path, '--format='+options.format, filename], function(error, stdout, stderr) {
 				if (stderr) { console.error(stderr); }
