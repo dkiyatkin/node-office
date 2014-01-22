@@ -36,13 +36,17 @@ var office = {
 		var self = this;
 		if (options.ext !== 'xls') {
 			var tempname = temp.path({prefix: 'node-office-'});
-			exec('unoconv', ['--output='+tempname, '--format=xls', filename], function(error, stdout, stderr) {
+			exec('unoconv', ['-o', tempname, '--format=xls', filename], function(error, stdout, stderr) {
 				if (stderr) { console.error(stderr); }
 				if (!error) {
-					self.xlsParse(tempname, function(err, data) {
-						fs.unlink(tempname, function(e) {
+					var tempfile = path.join(tempname, path.basename(filename, path.extname(filename))+'.xls');
+					self.xlsParse(tempfile, function(err, data) {
+						fs.unlink(tempfile, function(e) {
 							if (e) { console.error(e); }
-							cb(err, data);
+							fs.rmdir(tempname, function(e) {
+								if (e) { console.error(e); }
+								cb(err, data);
+							});
 						});
 					});
 				} else { cb(error); }

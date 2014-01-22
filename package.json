@@ -1,6 +1,6 @@
 {
   "name": "office",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Parse office documents (doc, docx, xls, etc..)",
   "main": "index.js",
   "directories": {
