@@ -28,7 +28,7 @@ var office = {
 			if (code) {
 				callback(code);
 			} else {
-				callback(null, xmlParser.toJson(stdout, {object: true}).excel_workbook);
+				callback(null, xmlParser.toJson(stdout, {object: true, sanitize:false}).excel_workbook);
 			}
 		});
 	},
